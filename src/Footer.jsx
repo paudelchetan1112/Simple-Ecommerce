@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom';
 export default function Footer({ theme}) {
   return (
     <div>
@@ -28,13 +28,16 @@ export default function Footer({ theme}) {
           <h1 className="text-2xl md:text-3xl mb-5 text-white">Nepalgunj</h1>
           <ul className="space-y-3">
             <li className="hover:underline flex items-center gap-2 text-white">
-              <i className="fas fa-arrow-right"></i> Home
+              <i className="fas fa-arrow-right"></i><Link to="/">Home</Link>
             </li>
             <li className="hover:underline flex items-center gap-2 text-white">
-              <i className="fas fa-arrow-right"></i> Services
+              <i className="fas fa-arrow-right"></i> <Link to="/about">About</Link>
             </li>
             <li className="hover:underline flex items-center gap-2 text-white">
-              <i className="fas fa-arrow-right"></i> Contact
+              <i className="fas fa-arrow-right"></i> <Link to="/product">Our Product</Link>
+            </li>
+             <li className="hover:underline flex items-center gap-2 text-white">
+              <i className="fas fa-arrow-right"></i> <Link to="/contact">Contact</Link>
             </li>
           </ul>
         </div>
