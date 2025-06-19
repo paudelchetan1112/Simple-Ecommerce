@@ -5,12 +5,11 @@ import Skeleton from './Skeleton'
 import ProductDetail from './ProductDetail'
 import { BrowserRouter } from 'react-router-dom'
 
-const Product = ({theme,sidenav,search,handleAddToCart,handleCart}) => {
+const Product = ({theme,sidenav,search,handleAddToCart,handleCart,category}) => {
 const[product,setProduct]=useState([])
 const[loading, setLoading]=useState(true)
 const[selectedProductId, setSelectedProductId]=useState(null);
-console.log(search)
-
+console.log(category)
 const Api=async() => {
     try{
     let response=await fetch('https://fakestoreapi.com/products');
@@ -29,9 +28,21 @@ useEffect(()=>{
 Api();
 },[])
 
-const filteredProducts =product.filter(item =>
-  item.title?.toLowerCase().includes(search.toLowerCase())
-);
+const filteredProducts = product.filter(item => {
+  // search छ भने, search नै priority
+  if (search.trim() !== "") {
+    return item.title?.toLowerCase().includes(search.toLowerCase());
+  }
+
+  // category छ भने
+  if (category && category.trim() !== "") {
+    return item.category?.toLowerCase() === category.toLowerCase();
+  }
+
+  // नत्र सबै product देखाउ (whole product)
+  return true;
+});
+
 
 
   return (
@@ -54,25 +65,40 @@ const filteredProducts =product.filter(item =>
           />
         </div>
        
-        {loading?<><Skeleton/>
-          <Skeleton/>
-          <Skeleton/>
-          <Skeleton/>
-          <Skeleton/>
-          <Skeleton/>
-          <Skeleton/>
-          <Skeleton/>
-          <Skeleton/>
-          <Skeleton/>
-          </>:
-          filteredProducts.length>0?
-        
-          filteredProducts.map((dataItem)=>{
-            return (
-              <ProductCard key={dataItem.id} image={dataItem.image} id={dataItem.id} title={dataItem.title} theme={theme} product={dataItem} />
-            )
-          }):<p>Product Not Found</p>
-          }
+        {
+  loading ? (
+    <>
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+    </>
+  ) : (
+    filteredProducts.length > 0 ? (
+      filteredProducts.map((dataItem) => (
+        <ProductCard
+          key={dataItem.id}
+          handleAddToCart={handleAddToCart}
+          image={dataItem.image}
+          id={dataItem.id}
+          title={dataItem.title}
+          theme={theme}
+          product={dataItem}
+        />
+      ))
+    ) : (
+      <p>Product Not Found</p>
+    )
+  )
+}
+
+
       </div>
       <div
           aria-hidden="true"
@@ -92,3 +118,5 @@ const filteredProducts =product.filter(item =>
 }
 
 export default Product
+
+

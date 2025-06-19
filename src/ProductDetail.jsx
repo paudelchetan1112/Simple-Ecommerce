@@ -18,15 +18,15 @@ const ProductDetail = ({ theme,handleCart,handleAddToCart}) => {
       <div className="text-sm mb-4 cursor-pointer text-blue-500" onClick={() => navigate("/product")}>
         ← Back to Products
       </div>
-    <div className='w-2xl flex flex-col items-center justify-center m-auto'>
+    <div className=' flex flex-col items-center justify-center m-auto'>
       <h2 className="text-2xl font-bold mb-2">{product.title}</h2>
     
       
-      <img src={product.image} alt={product.title} className="w-96 mb-4" />
-      <p>{product.description}</p>
+      <img src={product.image} alt={product.title} className=" mb-4" />
+      <p className="text-lg mt-2 text-justify p-3 sm:w-4xl">{product.description}</p>
       <p className="text-green-400 font-semibold text-lg mt-2">${product.price}</p>
    
-        <button onClick={()=>(handleAddToCart(product))} className='w-sm rounded-xl p-3 border-2  text-xl hover:bg-gray-600 '>Add To Cart</button>
+        <button onClick={()=>(handleAddToCart(product))} className='sm:w-lg rounded-xl p-3 border-2  text-xl hover:bg-gray-600 '>Add To Cart</button>
   
     </div>
     </div>

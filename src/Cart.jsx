@@ -1,6 +1,7 @@
 // Cart.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaTrash } from 'react-icons/fa';
 
 const Cart = ({ cartItems, theme }) => {
    
@@ -25,6 +26,10 @@ const Cart = ({ cartItems, theme }) => {
                     <div>
                       <p className="font-semibold">{item.title}</p>
                       <p className="text-sm text-gray-400">{item.quantity} pcs</p>
+                    </div>
+                    <div >
+                     <span className='text-sm'><FaTrash className="text-red-500 cursor-pointer" onClick={() => handleDelete(item.id)} />
+</span>
                     </div>
                   </div>
                   <span className="text-green-400 font-semibold">${(item.price * item.quantity).toFixed(2)}</span>

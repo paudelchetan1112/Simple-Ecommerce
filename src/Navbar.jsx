@@ -5,9 +5,12 @@ import { useState } from 'react';
 import { BrowserRouter,Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import Cart from './Cart';
+import Dropdown from './Dropdown';
+import { FaCaretDown } from 'react-icons/fa';
+import { BiCategory } from 'react-icons/bi';
 
 
-const Navbar = ({theme,handleTheme,handleSideNav, handleKeyDown, cartItems, cartCount}) => {
+const Navbar = ({theme, handleTheme, handleCategory, category, handleSideNav, handleKeyDown, cartItems, cartCount, handledropdownonMouseEnter, showDropDown, handledropdownonMouseLeave}) => {
 console.log(cartItems)
 console.log(cartItems.length)
   return (
@@ -26,8 +29,10 @@ console.log(cartItems.length)
         </div>
         <ul className='md:flex justify-between gap-10 mx-4 hidden'>
             <li className="hover:underline hover:cursor-pointer"><Link to="/">Home</Link></li>
-             <li className="hover:underline hover:cursor-pointer"><Link to="/about">About</Link></li>
-              <li className="hover:underline hover:cursor-pointer"><Link to="/product">Our Product</Link></li>
+             <li className="hover:underline hover:cursor-pointer "><Link to="/about">About</Link></li>
+              <li onMouseEnter={()=>handledropdownonMouseEnter()} onMouseLeave={()=>handledropdownonMouseLeave()} onClick={()=>category('')} className="hover:cursor-pointer z-10 relative"><Link to="/product">Our Product  <FaCaretDown className="text-xs inline mt-1" /></Link>
+            {showDropDown && (<Dropdown handleCategory={handleCategory} className="absolute"/>)}
+          </li>
                <li className="hover:underline hover:cursor-pointer"><Link to="/contact">Contact</Link></li>
                 
         </ul>

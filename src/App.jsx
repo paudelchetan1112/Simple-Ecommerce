@@ -16,10 +16,24 @@ import Cart from './Cart'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const App = () => {
+  const[showDropDown, setShowDropDown]=useState(false)
   const[cartCount, setCartCount]=useState(0);
   const[theme, setTheme]=useState("Dark")
   const[search, setSearch]=useState("");
   const [cartItems, setCartItems]=useState([])
+  const [category, setCategory]=useState("")
+ 
+  const handleCategory=(e)=>{
+setCategory(e);
+
+  }
+
+  const handledropdownonMouseEnter=()=>{
+setShowDropDown(true);
+  }
+  const handledropdownonMouseLeave=()=>{
+    setShowDropDown(false)
+  }
 const handleAddToCart = (product) => {
   setCartItems((prevItems) => {
     const existingItem = prevItems.find(item => item.id === product.id);
@@ -68,11 +82,11 @@ setSideNav(false)
   return (
     <BrowserRouter>
     <div className={` transition-all duration-900 ${theme==="Dark"?"":"bg-gray-900"}`}>
-        <Navbar theme={theme} handleSideNav={handleSideNav} cartCount={cartCount} handleKeyDown={handleKeyDown} handleTheme={handleTheme} cartItems={cartItems} />
+        <Navbar showDropDown={showDropDown} handleCategory={handleCategory} handledropdownonMouseEnter={handledropdownonMouseEnter} handledropdownonMouseLeave={handledropdownonMouseLeave} theme={theme} handleSideNav={handleSideNav} cartCount={cartCount} category={category} handleKeyDown={handleKeyDown} handleTheme={handleTheme} cartItems={cartItems} />
         <SideNav sidenav={sidenav} handleOnClickOnSidenav={handleOnClickOnSidenav}/>
       <Routes>
            <Route path="/" element={<HomePage theme={theme}/>} />
-      <Route path="/product" element={<Product theme={theme} sidenav={sidenav} search={search} handleAddToCart={handleAddToCart}/>} />
+      <Route path="/product" element={<Product category={category} theme={theme} sidenav={sidenav} search={search} handleAddToCart={handleAddToCart}/>} />
        <Route path="/product/:id" element={<ProductDetail handleCart={handleCart} theme={theme} handleAddToCart={handleAddToCart} />} />
        <Route path="/cart" element={<Cart cartItems={cartItems} theme={theme} />} />
 
